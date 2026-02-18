@@ -516,8 +516,49 @@ async def main_menu():
             await bot.send_report_with_retry(account, target, 'group', category)
         
         elif choice == '5':
-           pass
+             account = input("Account name: ").strip()
+            target = input("Channel username (@channel): ").strip()
+            category = input("Category [spam]: ").strip() or 'spam'
+            await bot.send_report_with_retry(account, target, 'channel', category)
+        
+        elif choice == '6':
+            accounts_str = input("Accounts (acc1,acc2,acc3): ").strip()
+            accounts = [a.strip() for a in accounts_str.split(',')]
+            target = input("Target: ").strip()
+            target_type = input("Type (user/bot/group/channel): ").strip() or 'user'
+            category = input("Category [spam]: ").strip() or 'spam'
+            await bot.smart_batch_report(accounts, target, target_type, category, concurrent=False)
+        
+        elif choice == '7':
+            accounts_str = input("Accounts (acc1,acc2,acc3): ").strip()
+            accounts = [a.strip() for a in accounts_str.split(',')]
+            target = input("Target: ").strip()
+            target_type = input("Type (user/bot/group/channel): ").strip() or 'user'
+            category = input("Category [spam]: ").strip() or 'spam'
+            await bot.smart_batch_report(accounts, target, target_type, category, concurrent=True)
+        
+        elif choice == '8':
+            await bot.list_accounts()
+        
+        elif choice == '9':
+            await bot.show_advanced_stats()
+        
+        elif choice == '10':
+            bot.show_settings()
+        
+        elif choice == '11':
+            print("👋 Goodbye!")
+            break
+        
+        else:
+            print("❌ Invalid choice!")
 
-        if __name__ == "__main__":
-             import asyncio
-             asyncio.run(main_menu())
+async def main():
+    await bot.init_db()
+    await main_menu()
+
+if __name__ == '__main__':
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("\n👋 Bye!")
