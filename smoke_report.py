@@ -517,3 +517,7 @@ async def main_menu():
         
         elif choice == '5':
            pass
+
+        if __name__ == "__main__":
+             import asyncio
+             asyncio.run(main_menu())
