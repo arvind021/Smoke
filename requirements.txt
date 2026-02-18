@@ -1,1 +1,2 @@
-pip install telethon aiosqlite
+telethon 
+aiosqlite
